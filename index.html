@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #chat-container {
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 10px;
+            overflow-y: scroll;
+            height: 300px;
+        }
+
+        #input-container {
+            max-width: 600px;
+            margin: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container"></div>
+    <div id="input-container">
+        <input type="text" id="user-input" placeholder="You">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function appendMessage(sender, message) {
+            var chatContainer = document.getElementById("chat-container");
+            var messageElement = document.createElement("div");
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            appendMessage("You", userInput);
+
+            // Check if the user wants to exit
+            if (userInput.toLowerCase() === 'exit') {
+                appendMessage("Chatbot", "Goodbye!");
+                return;
+            }
+
+            // Check if the user wants information about the next holiday in Sri Lanka
+            if (userInput.toLowerCase().includes('holiday?')) {
+                // Simulate a server request (replace this with actual server-side logic)
+                // For simplicity, we'll use a setTimeout to simulate an asynchronous response
+                setTimeout(function() {
+                    // Simulate the server response
+                    var chatbotResponse = "The nearest holiday in Sri Lanka is the Tamil Thai Pongol on the 15th January 2024.";
+
+                    // Append the chatbot's response
+                    appendMessage("Mr. Boost", chatbotResponse);
+                }, 1000); // Simulate a 1-second delay (adjust as needed)
+            } else {
+                appendMessage("Mr. Boost", "I'm here to help with holiday information. If you want to know the next holiday in Sri Lanka, just say 'Holiday?'");
+            }
+
+            // Clear the input field
+            document.getElementById("user-input").value = "";
+        }
+    </script>
+</body>
+</html>
